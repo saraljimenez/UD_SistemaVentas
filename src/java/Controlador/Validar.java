@@ -50,21 +50,24 @@ public class Validar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("entro al post");
         String accion = request.getParameter("accion");
         if (accion.equalsIgnoreCase("Ingresar")) {
+            System.out.println("entro a ingresar");
             String user = request.getParameter("txtuser");
             String pass = request.getParameter("txtpass");
-            request.setAttribute("clave_normal", pass);
-            String ClaveEncriptada = asegurarClave(pass);
+           // request.setAttribute("clave_normal", pass);
+       //     String ClaveEncriptada = asegurarClave(pass);
 
-            System.out.println("CLAVE ENCRIPTADA: " + ClaveEncriptada);
+       //     System.out.println("CLAVE ENCRIPTADA: " + ClaveEncriptada);
 
-            em = edao.validar(user, ClaveEncriptada);
+            em = edao.validar(user, pass);
             if (em.getUser() != null) {
+                System.out.println("ingreso a if");
                 request.setAttribute("usuario", em);
                 HttpSession session = request.getSession(true);
                 session.setAttribute("usuario", em);
-                request.getRequestDispatcher("Controlador?accion=Principal").forward(request, response); // Redirección después de la autenticación
+                request.getRequestDispatcher("Controlador?menu=Principal").forward(request, response); // Redirección después de la autenticación
             } else {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }

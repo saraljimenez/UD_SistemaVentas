@@ -48,6 +48,7 @@ public class Controlador extends HttpServlet {
             String accion = request.getParameter("accion");
             
             if (menu.equals("Principal")) {
+                System.out.println("redireccion a principal");
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
         }
             

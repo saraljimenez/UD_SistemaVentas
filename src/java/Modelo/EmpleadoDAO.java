@@ -14,7 +14,8 @@ public class EmpleadoDAO {
     
     public Empleado validar (String user,String Contrasena){
         Empleado em=new Empleado();
-        String sql="select * from empleado where user=? and Contrasena=?";
+        String sql="select * from empleado where user=? and Contrasena=? " ;
+        System.out.println("ingreso a validar "+user+" "+Contrasena);
 
         try{
             con=cn.Conexion();
@@ -23,12 +24,16 @@ public class EmpleadoDAO {
             ps.setString(2, Contrasena);
             rs=ps.executeQuery();
             while(rs.next()){
-                //em.setId(rs.getInt("IdEmpleado"));
-                em.setUser(rs.getString("user"));
-                em.setDni(rs.getString("Contrasena"));
+                em.setId(rs.getInt("IdEmpleado"));
+                em.setDni(rs.getString("Dni"));
                 em.setNom(rs.getString("Nombres"));
+                em.setTel(rs.getString("Telefono"));
+                em.setEstado(rs.getString("Estado"));
+                em.setUser(rs.getString("User"));
+                System.out.println("entro al while");
             }
-        }catch (Exception e){
+        }catch (SQLException e){ 
+            System.out.println("error al validar "+e.getMessage());
         }
         return em;
     }
